@@ -7,6 +7,7 @@ end
 
 gem 'pg'
 gem 'rb-fsevent', '0.9.8'
+gem 'rails-controller-testing'
 gem 'slim'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
