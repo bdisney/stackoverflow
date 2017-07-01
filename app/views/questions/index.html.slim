@@ -1,0 +1,8 @@
+h1
+  strong Questions
+.row
+  .col-sm-12
+    = link_to 'Задать вопрос', new_question_path,
+            class: 'btn btn-sm btn-outline-success btn-rounded pull-right', role: 'button'
+.col-md-12
+  = render @questions

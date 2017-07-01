@@ -1,0 +1,13 @@
+= render 'shared/errors_messages', resource: @question
+
+.row
+  .col-md-6
+    = form_for @question do |f|
+      .md-form
+        = f.label :title
+        = f.text_field :title, class: 'form-control'
+      .md-form
+        = f.label :body
+        = f.text_area :body, class: 'md-textarea'
+      div
+        button.btn.btn-default type="submit" Create
