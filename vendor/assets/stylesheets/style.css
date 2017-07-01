@@ -1,0 +1,26 @@
+html,
+body,
+main {
+    height: 100%;
+}
+
+body {
+    padding-top: 10%;
+}
+
+.navbar {
+    background-color: whitesmoke;
+}
+
+
+.top-nav-collapse {
+    background-color: whitesmoke;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        background-color: lightslategray;
+    }
+}
+
+
