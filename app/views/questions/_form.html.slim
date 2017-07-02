@@ -3,11 +3,11 @@
 .row
   .col-md-6
     = form_for @question do |f|
-      .md-form
+      .form-group
         = f.label :title
-        = f.text_field :title, class: 'form-control'
-      .md-form
+        = f.text_area :title, class: 'form-control'
+      .form-group
         = f.label :body
-        = f.text_area :body, class: 'md-textarea'
+        = f.text_area :body, class: 'form-control', style: 'height: auto;', rows: '3'
       div
-        button.btn.btn-default type="submit" Create
+        button.btn.btn-outline-info.btn-rounded type="submit" Create

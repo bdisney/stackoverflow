@@ -1,4 +1,30 @@
-h1= @question.title
+.d-flex.justify-content-between.mb-12
+  p-2.align-self-end
+    h3
+      strong = @question.title
+  p-2 = link_to 'Ask question', new_question_path,
+          class: 'btn btn-sm btn-outline-info btn-rounded', role: 'button'
+hr
+br
+.d-flex.justify-content-end
+  mr-auto.p-2.text-muted.small asked #{time_ago_in_words(@question.created_at)} ago
+.d-flex.justify-content-end
+  mr-auto.p-2.text-muted.small viewed
 
-.question-body
-  = @question.body
+.row
+  .col-md-10
+    p
+      = @question.body
+
+    - if @question.answers.present?
+      hr
+      h3
+        strong Answers
+      .answers-list
+        - @question.answers.each do |answer|
+          .answer
+            p = answer.body
+    br
+.row
+  = link_to '<button type="button" class="btn-flat btn-rounded waves-effect text-info btn-sm">Add answer</button>'.html_safe,
+        new_question_answer_path(@question)

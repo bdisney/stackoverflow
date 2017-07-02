@@ -1,8 +1,10 @@
-h1
-  strong Questions
-.row
-  .col-sm-12
-    = link_to 'Задать вопрос', new_question_path,
-            class: 'btn btn-sm btn-outline-success btn-rounded pull-right', role: 'button'
-.col-md-12
+#top-section.d-flex.flex-row
+  .col-md-10.align-self-end
+    h3
+      strong Top questions
+  .col-md-2
+    = link_to 'Ask question', new_question_path,
+            class: 'btn btn-sm btn-outline-info btn-rounded', role: 'button'
+hr
+.col-md-10
   = render @questions
