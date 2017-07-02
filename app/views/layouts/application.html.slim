@@ -17,6 +17,7 @@ html
     .container
       = yield
       = custom_flash
+      = render 'shared/back_to_top'
 
     = javascript_include_tag 'jquery-3.1.1'
     = javascript_include_tag 'tether.min'
