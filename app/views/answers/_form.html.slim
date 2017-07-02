@@ -1,0 +1,8 @@
+= render 'shared/errors_messages', resource: @answer
+
+h3 Add new answer
+
+= form_for [@question, @answer] do |f|
+  = f.text_area :body, class: 'md-textarea'
+  div
+    button.btn.btn-outline-info.btn-rounded.btn-sm type="submit" Create
