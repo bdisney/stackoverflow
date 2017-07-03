@@ -21,7 +21,7 @@ feature 'User sign in', %q{
     visit new_user_session_path
     fill_in 'Email', with: 'wrong-test@test.com'
     fill_in 'Password', with: '123456'
-    click_on 'Log in'
+    click_button 'Log in'
 
     expect(page).to have_selector('#toastr-messages',
                                   visible: false,
