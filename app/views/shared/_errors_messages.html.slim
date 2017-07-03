@@ -1,0 +1,5 @@
+- if resource.errors.any?
+  - resource.errors.messages.each do |attribute, messages|
+    - messages.each do |message|
+      javascript:
+        toastr.error("#{attribute.capitalize} #{message}");
