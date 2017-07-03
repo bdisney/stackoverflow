@@ -37,7 +37,7 @@ RSpec.describe AnswersController, type: :controller do
             answer: attributes_for(:invalid_answer),
             question_id: question
           }
-        }.to_not change(question.answers, :count)
+        }.to_not change(Answer, :count)
       end
 
       it 're-renders new view' do
