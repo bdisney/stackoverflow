@@ -1,5 +1,5 @@
 header
-  nav.navbar.navbar-toggleable-md.navbar-dark.fixed-top.scrolling-navbar
+  nav.navbar.navbar-toggleable-md.navbar.fixed-top.scrolling-navbar
     .container
       button.navbar-toggler.navbar-toggler-right aria-controls="navbarNav1" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarNav1" data-toggle="collapse" type="button"
         span.navbar-toggler-icon
@@ -14,3 +14,4 @@ header
               | questions
               span.sr-only (current)
         ul.nav.navbar-nav.nav-flex-icons.ml-auto
+          = render 'shared/nav_bar_icons'

@@ -1,0 +1,18 @@
+- if user_signed_in?
+  li.nav-item
+    a.nav-link.text-gray-dark href=edit_user_registration_path
+      i
+        strong Signed in as #{current_user.email}
+  li.nav-item
+    a.nav-link.text-gray-dark data-method="delete" href=destroy_user_session_path
+      strong Log out
+      i.fa.fa-sign-out
+- else
+  li.nav-item
+    a.nav-link.text-gray-dark href=new_user_registration_path
+      strong Sign up
+      i.fa.fa-user-plus
+  li.nav-item
+    a.nav-link.text-gray-dark href=new_user_session_path
+      strong Log in
+      i.fa.fa-sign-in
