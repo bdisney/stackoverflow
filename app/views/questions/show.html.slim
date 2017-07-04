@@ -25,6 +25,10 @@ br
           .answer
             p = answer.body
     br
-.row
-  = link_to '<button type="button" class="btn-flat btn-rounded waves-effect text-info btn-sm">Add answer</button>'.html_safe,
-        new_question_answer_path(@question)
+    hr
+- if user_signed_in?
+  = render 'answers/form'
+- else
+  .d-flex.justify-content-end.col-md-10
+    i.small You should #{link_to 'log in', new_user_session_path} or #{link_to 'sign up', new_user_registration_path}
+      to answer this question.
