@@ -23,6 +23,11 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
+
+    it 'assigns new Answer to @answer' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
     it 'renders show view' do
       expect(response).to render_template :show
     end
@@ -59,7 +64,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid attributes' do
       it 'saves new question in the database' do
         expect { process :create, method: :post, params: { question: attributes_for(:question) } }
-          .to change(Question, :count).by(1)
+          .to change(@user.questions, :count).by(1)
       end
       it 'redirects to show view' do
         process :create, method: :post, params: { question: attributes_for(:question) }

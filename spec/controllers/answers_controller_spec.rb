@@ -5,10 +5,11 @@ RSpec.describe AnswersController, type: :controller do
   let(:answer) { create(:answer, question: question) }
 
   describe 'POST #create' do
+    sign_in_user
     context 'with valid attributes' do
       it 'it saves new answer to db' do
         expect { process :create, method: :post, params: {answer: attributes_for(:answer), question_id: question }}
-            .to change(question.answers, :count).by(1)
+            .to change(@user.answers, :count).by(1)
       end
 
       it 'redirects to @question' do

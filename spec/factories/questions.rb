@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :question do
     title 'MyTitle'
     body 'MyBody'
+    user
 
     factory :question_with_answers do
       transient do
@@ -17,5 +18,6 @@ FactoryGirl.define do
   factory :invalid_question, class: 'Question' do
     title nil
     body nil
+    user
   end
 end
