@@ -24,6 +24,9 @@ br
         - @question.answers.each do |answer|
           .answer
             p = answer.body
+    - else
+      hr
+      small There is no answers yet.
     br
     hr
 - if user_signed_in?
