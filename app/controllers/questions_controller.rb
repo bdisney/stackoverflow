@@ -36,8 +36,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    @question.destroy if current_user.can_can_can_manage?(@question)
+    redirect_to questions_path, notice: 'Question was deleted.'
   end
 
   private

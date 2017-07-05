@@ -1,0 +1,8 @@
+.answer
+  p = answer.body
+  - if current_user&.can_can_can_manage?(answer)
+    p.text-right
+      = link_to 'Delete', answer_path(answer), method: :delete,
+              class: 'btn btn-outline-danger btn-sm',
+              id: 'delete-answer-button',
+              data: {confirm: 'Are you sure?'}
