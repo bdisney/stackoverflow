@@ -21,11 +21,10 @@ feature 'Create answer', %q{
                                   text: 'Answer was created.')
   end
 
-  scenario 'Non-authenticated user want to creates answer' do
+  scenario 'Non-authenticated user wants to create answer' do
     visit question_path(question)
 
     expect(page).to_not have_content('Add new answer:')
     expect(page).to have_content('You should log in or sign up to answer this question.')
   end
-
 end
