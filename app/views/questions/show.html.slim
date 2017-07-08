@@ -14,20 +14,18 @@ br
 .row
   .col-md-10
     = @question.body
-    - if current_user&.can_can_can_manage?(@question)
+    - if current_user&.author_of?(@question)
       p.text-right
-        = link_to 'Delete', question_path, method: :delete,
+        = link_to 'Delete', question_path(@question), method: :delete,
                   class: 'btn btn-outline-danger btn-sm',
                   data: { confirm: 'Are you sure?' }
 
-    - if @question.answers.present?
+    - if @question.answers.select(&:persisted?).any?
       hr
       h3
         strong Answers
       .answers-list
-        - @question.answers.each do |answer|
-          = render 'answer', answer: answer
-            hr
+        = render @question.answers
     - else
       hr
       small There is no answers yet.

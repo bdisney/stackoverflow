@@ -11,10 +11,10 @@ feature 'View question with or without answers', %q{
   scenario 'View question without answers' do
     question = create(:question)
     visit questions_path
-    click_on('MyTitle')
+    click_on('Lorem Ipsum')
 
     expect(current_path).to eq question_path(question)
-    expect(page).to have_content('MyTitle')
+    expect(page).to have_content('Lorem Ipsum')
     expect(page).to have_content('MyBody')
     expect(page).to_not have_content('Answers')
     expect(page).to have_content('There is no answers yet.')
@@ -25,6 +25,6 @@ feature 'View question with or without answers', %q{
     visit question_path(question)
 
     expect(page).to have_content('Answers')
-    expect(page).to have_content('SomeText', count: 2)
+    expect(page).to have_content('Answer body', count: 2)
   end
 end

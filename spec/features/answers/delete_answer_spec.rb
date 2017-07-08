@@ -14,10 +14,13 @@ feature 'Delete question', %q{
 
   scenario 'deletes by author' do
     visit question_path(question)
+
+    expect(page).to have_content('Answer body')
     expect(page).to have_selector('#delete-answer-button')
     find('#delete-answer-button').click
 
     expect(page).to_not have_selector('.answer')
+    expect(page).to_not have_content('Answer body')
   end
 
   scenario 'intruder tries delete user answer' do

@@ -8,14 +8,14 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      redirect_to question_path(@question), notice: 'Answer was created.'
+      redirect_to @question, notice: 'Answer was created.'
     else
       render 'questions/show'
     end
   end
 
   def destroy
-    @answer.destroy if current_user.can_can_can_manage?(@answer)
+    @answer.destroy if current_user.author_of?(@answer)
     redirect_to @answer.question, notice: 'Answer was deleted.'
   end
 

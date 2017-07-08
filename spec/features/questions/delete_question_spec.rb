@@ -12,7 +12,6 @@ feature 'Delete question', %q{
   scenario 'Author of question delete it' do
     sign_in(user)
     visit question_path(question)
-    expect(page).to have_link('Delete')
 
     click_on('Delete')
 
@@ -20,6 +19,8 @@ feature 'Delete question', %q{
     expect(page).to have_selector('#toastr-messages',
                                   visible: false,
                                   text: 'Question was deleted.')
+    expect(page).to_not have_content(question.title)
+    expect(page).to_not have_content(question.body)
   end
 
   scenario 'Intruder tries to delete it' do

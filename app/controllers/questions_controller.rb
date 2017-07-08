@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = Answer.new
+    @answer = @question.answers.new
   end
 
   def new
@@ -36,7 +36,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy if current_user.can_can_can_manage?(@question)
+    @question.destroy if current_user.author_of?(@question)
     redirect_to questions_path, notice: 'Question was deleted.'
   end
 

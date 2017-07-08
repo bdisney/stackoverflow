@@ -101,12 +101,12 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'changes question attributes' do
         process :update, method: :patch, params: {
-          id: question, question: {title: 'new title', body: 'new body' }
+          id: question, question: {title: 'Question new title', body: 'new body' }
         }
 
         question.reload
 
-        expect(question.title).to eq 'new title'
+        expect(question.title).to eq 'Question new title'
         expect(question.body).to eq 'new body'
       end
 
@@ -118,13 +118,13 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid attributes' do
       before do
         process :update, method: :patch, params: {
-            id: question, question: {title: 'new title', body: nil }
+            id: question, question: {title: 'Title for invalid question', body: nil }
         }
       end
       it 'does not change question attributes' do
         question.reload
 
-        expect(question.title).to eq 'MyTitle'
+        expect(question.title).to eq 'Lorem Ipsum'
         expect(question.body).to eq 'MyBody'
       end
 

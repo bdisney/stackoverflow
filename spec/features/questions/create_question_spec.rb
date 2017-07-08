@@ -20,6 +20,29 @@ feature 'Create question', %q{
     expect(page).to have_selector('#toastr-messages',
                                   visible: false,
                                   text: 'Question was created.')
+    expect(page).to have_content('Test question')
+    expect(page).to have_content('Test body')
+  end
+
+  scenario 'Authenticated user tries create question with invalid data' do
+    sign_in(user)
+    visit questions_path
+    click_on 'Ask question'
+
+    invalid_data = attributes_for(:invalid_question)
+
+    fill_in 'Title', with: invalid_data[:title]
+    fill_in 'Body', with: invalid_data[:body]
+
+    click_on 'Create'
+
+    expect(page).to have_selector('#toastr-errors',
+                                  visible: false,
+                                  text: "Body can&#39;t be blank")
+    expect(page).to have_selector('#toastr-errors',
+                                  visible: false,
+                                  text: "Title can&#39;t be blank")
+    expect(current_path).to eq questions_path
   end
 
   scenario 'Non-authenticated user tries to create question' do

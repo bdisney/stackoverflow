@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :question do
-    title 'MyTitle'
+    title 'Lorem Ipsum'
     body 'MyBody'
     user
 

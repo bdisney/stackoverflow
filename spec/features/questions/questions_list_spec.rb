@@ -7,10 +7,11 @@ feature 'Display list of questions', %q{
 } do
 
   scenario 'User views the list of questions' do
-    5.times { create(:question) }
+    create_list(:question, 5)
+
     visit questions_path
 
-    expect(page).to have_content('MyTitle', count: 5)
+    expect(page).to have_content('Lorem Ipsum', count: 5)
     expect(page).to have_content('MyBody', count: 5)
   end
 end

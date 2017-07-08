@@ -19,6 +19,19 @@ feature 'Create answer', %q{
     expect(page).to have_selector('#toastr-messages',
                                   visible: false,
                                   text: 'Answer was created.')
+    expect(page).to have_content('Some text')
+  end
+
+  scenario 'Authenticated user tries create answer with invalid data' do
+    sign_in(user)
+    visit question_path(question)
+    fill_in 'answer[body]', with: ''
+    click_on('add answer')
+
+    expect(page).to have_selector('#toastr-errors',
+                                  visible: false,
+                                  text: "Body can&#39;t be blank")
+    expect(current_path).to eq question_answers_path(question)
   end
 
   scenario 'Non-authenticated user wants to create answer' do
