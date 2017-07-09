@@ -65,7 +65,10 @@ RSpec.describe AnswersController, type: :controller do
           .to_not change(Answer, :count)
       end
 
-
+      it 'redirects to question page' do
+        process :destroy, method: :post, params: { id: answer }
+        expect(response).to redirect_to question_path(answer.question)
+      end
     end
   end
 end

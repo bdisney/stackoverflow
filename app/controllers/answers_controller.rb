@@ -15,8 +15,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy if current_user.author_of?(@answer)
-    redirect_to @answer.question, notice: 'Answer was deleted.'
+    if current_user.author_of?(@answer)
+      @answer.destroy
+      redirect_to @answer.question, notice: 'Answer was deleted.'
+    else
+      redirect_to @answer.question, notice: 'Holy guacamole! Permission denied!'
+    end
   end
 
   private
@@ -30,6 +34,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, :question_id)
+    params.require(:answer).permit(:body)
   end
 end

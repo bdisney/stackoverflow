@@ -158,6 +158,11 @@ RSpec.describe QuestionsController, type: :controller do
         expect { process :destroy, method: :delete, params: { id: question } }
             .to_not change(Question, :count)
       end
+
+      it 'redirects to index view' do
+        process :destroy, method: :delete, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
   end
 end

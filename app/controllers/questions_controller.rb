@@ -36,8 +36,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy if current_user.author_of?(@question)
-    redirect_to questions_path, notice: 'Question was deleted.'
+    if current_user.author_of?(@question)
+      @question.destroy
+      redirect_to questions_path, notice: 'Question was deleted.'
+    else
+      redirect_to questions_path, notice: 'Holy guacamole! Permission denied!'
+    end
   end
 
   private
