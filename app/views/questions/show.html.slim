@@ -13,18 +13,26 @@ br
 
 .row
   .col-md-10
-    p
-      = @question.body
+    = @question.body
+    - if current_user&.author_of?(@question)
+      p.text-right
+        = link_to 'Delete', question_path(@question), method: :delete,
+                  class: 'btn btn-outline-danger btn-sm',
+                  data: { confirm: 'Are you sure?' }
 
-    - if @question.answers.present?
+    - if @question.answers.select(&:persisted?).any?
       hr
       h3
         strong Answers
       .answers-list
-        - @question.answers.each do |answer|
-          .answer
-            p = answer.body
+        = render @question.answers
+    - else
+      hr
+      small There is no answers yet.
     br
-.row
-  = link_to '<button type="button" class="btn-flat btn-rounded waves-effect text-info btn-sm">Add answer</button>'.html_safe,
-        new_question_answer_path(@question)
+- if user_signed_in?
+  = render 'answers/form'
+- else
+  .d-flex.justify-content-end.col-md-10
+    i.small You should #{link_to 'log in', new_user_session_path} or #{link_to 'sign up', new_user_registration_path}
+      to answer this question.

@@ -15,8 +15,8 @@ html
   body
     = render 'shared/nav_bar'
     .container
+      #toastr-messages = custom_flash
       = yield
-      = custom_flash
       = render 'shared/back_to_top'
 
     = javascript_include_tag 'jquery-3.1.1'

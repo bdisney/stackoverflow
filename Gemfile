@@ -5,9 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'devise'
 gem 'pg'
-gem 'rb-fsevent', '0.9.8'
 gem 'rails-controller-testing'
+gem 'rb-fsevent', '0.9.8'
 gem 'slim'
 gem 'toastr-rails'
 
@@ -44,6 +45,8 @@ group :development, :test do
 end
 
 group :test do
+  gem 'capybara'
+  gem 'launchy'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
 end
 

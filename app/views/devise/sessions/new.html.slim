@@ -1,0 +1,33 @@
+= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  br/
+  br/
+  .flex-center
+    .login-form
+      /! Form with header
+      .card.hoverable style=("width: 294px; border-radius: 10px") 
+        .card-block
+          /! Header
+          .form-header.info-color style=("border-radius: 5px") 
+            h3
+              i.fa.fa-lock
+              | Log In:
+          /! Body
+          .md-form
+            i.fa.fa-envelope.prefix
+            = f.email_field :email, class: "form-control", id: "form2"
+            label.text-gray-dark for="form2"  Your Email
+          .md-form
+            i.fa.fa-lock.prefix
+            = f.password_field :password, autocomplete: "off", class: "form-control", id: "form4"
+            label.text-gray-dark for="form4"  Your Password
+          .text-center
+            button.btn.btn-rounded.btn-outline-info value=("Log in") = t('.log_in')
+        /! Footer
+        .modal-footer
+          .options.text-right
+            p
+              | Not a member?
+              a href=new_user_registration_path rel="nofollow"  Sign Up
+            p
+              | Forgot your
+              a href="#{new_password_path(resource_name)}" rel="nofollow"  Password?
