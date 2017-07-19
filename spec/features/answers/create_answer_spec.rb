@@ -19,7 +19,6 @@ feature 'Create answer', %q{
     expect(page).to have_selector('.toast-success',
                                   visible: false,
                                   text: 'Answer was created.')
-    save_and_open_page
     expect(page).to have_content('Some text')
 
   end
