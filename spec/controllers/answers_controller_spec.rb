@@ -8,16 +8,20 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with valid attributes' do
       it 'it saves new answer to db' do
-        expect { process :create, method: :post, params: {answer: attributes_for(:answer), question_id: question} }
-            .to change(@user.answers.where(question: question), :count).by(1)
+        expect {
+          process :create,
+                  method: :post,
+                  params: {answer: attributes_for(:answer), question_id: question },
+                  format: :js
+        }.to change(@user.answers.where(question: question), :count).by(1)
       end
 
-      it 'redirects to @question' do
+      it 'render create template' do
         process :create, method: :post, params: {
           answer: attributes_for(:answer),
           question_id: question
-        }
-        expect(response).to redirect_to question_path(question)
+        }, format: :js
+        expect(response).to render_template :create
       end
     end
 
@@ -27,15 +31,15 @@ RSpec.describe AnswersController, type: :controller do
           process :create, method: :post, params: {
             answer: attributes_for(:invalid_answer),
             question_id: question
-          }
+          }, format: :js
         }.to_not change(Answer, :count)
       end
 
       it 're-renders question#show view' do
         process :create, method: :post, params: {
           answer: attributes_for(:invalid_answer), question_id: question
-        }
-        expect(response).to render_template 'questions/show'
+        }, format: :js
+        expect(response).to render_template :create
       end
     end
   end
