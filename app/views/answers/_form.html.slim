@@ -1,10 +1,9 @@
-= render 'shared/errors_messages', resource: @answer
+#flash-errors = render 'shared/errors_messages', resource: @answer
 
-h3
-  strong.text-muted Add new answer:
 .row
   .col-md-10
-    = form_for [@question, @answer] do |f|
+    = form_for [@question, @answer], remote: true do |f|
+      = f.label :body, 'Your awesome answer:'
       = f.text_area :body, class: 'form-control', style: 'height: auto;', rows: '3'
       .d-flex.flex-row-reverse
         button.btn-flat.btn-rounded.waves-effect.text-info.btn-sm type="submit" add answer
