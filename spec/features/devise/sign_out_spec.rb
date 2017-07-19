@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_spec_helper'
 
 feature 'User sign out', %q{
   In order to destroy my session

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_spec_helper'
 
 feature 'View question with or without answers', %q{
   In order to solve my problem

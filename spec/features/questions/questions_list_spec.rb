@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_spec_helper'
 
 feature 'Display list of questions', %q{
   In order to keep abreast of all matters
