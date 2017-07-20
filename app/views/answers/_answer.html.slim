@@ -9,6 +9,7 @@
         = button_tag 'Cancel', type: 'button', class: 'btn btn-outline-default btn-sm cancel'
         = button_tag 'Update answer', type: 'submit',
                 class: 'btn btn-outline-primary waves-effect btn-sm delete-button'
+
       p.text-right id="answer-buttons-#{answer.id}"
         = link_to 'Edit', '',
                 remote: true,
@@ -18,17 +19,4 @@
                 class: 'btn btn-outline-danger btn-sm',
                 id: 'delete-answer-button',
                 data: {confirm: 'Are you sure?'}
-
-
     hr
-
-//javascript:
-//    $(document).ready(function() {
-//        $('.edit-answer-link').click(function(e) {
-//            e.preventDefault();
-//            $(this).hide();
-//            var answer_id = $(this).data('answerId');
-//
-//            $('form#edit-answer-' + answer_id).show();
-//        });
-//    });
