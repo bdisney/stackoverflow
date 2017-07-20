@@ -10,12 +10,6 @@ feature 'Edit answer', %q{
   given!(:question) { create(:question) }
   given!(:answer)   { create(:answer, question: question, user: user) }
 
-  scenario 'Non-authenticated user tries to edit answer' do
-    visit question_path(question)
-
-    expect(page).to_not have_selector('#edit-answer-button')
-  end
-
   describe "Answer's author" do
     before do
       sign_in(user)
@@ -51,6 +45,12 @@ feature 'Edit answer', %q{
       expect(page).to have_selector('#answer_body')
       expect(answer.body).to_not be_nil
     end
+  end
+
+  scenario 'Non-authenticated user tries to edit answer' do
+    visit question_path(question)
+
+    expect(page).to_not have_selector('#edit-answer-button')
   end
 
   scenario "Authenticated user tries edit other user's answer", js: true do

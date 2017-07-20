@@ -1,7 +1,40 @@
-.question
-  h4
-    = link_to question.title, question
-  .question-summary
-    = question.body
-  p.small.text-right.text-muted asked #{time_ago_in_words(question.created_at)} ago
-  hr
+.d-flex.justify-content-between.mb-12
+  p-2.align-self-end
+    h3
+      .question-title
+        strong = @question.title
+  p-2 = link_to 'Ask question', new_question_path,
+          class: 'btn btn-sm btn-outline-info btn-rounded', role: 'button'
+hr
+br
+.d-flex.justify-content-end
+  mr-auto.p-2.text-muted.small asked #{time_ago_in_words(@question.created_at)} ago
+.d-flex.justify-content-end
+  mr-auto.p-2.text-muted.small viewed
+
+.row
+  .col-md-10
+    .question-body = @question.body
+    - if current_user&.author_of?(@question)
+      = form_for @question, remote: true, html: {id: "edit-question-#{@question.id}"} do |f|
+        = f.label :title, 'Title'
+        = f.text_area :title, class: 'form-control'
+        = f.label :body, 'Body'
+        = f.text_area :body, class: 'form-control'
+        = button_tag 'Cancel',
+                type: 'button',
+                class: 'btn btn-outline-default btn-sm cancel'
+        = button_tag 'Update question',
+                type: 'submit',
+                class: 'btn btn-outline-primary waves-effect btn-sm delete-button'
+
+      .question-buttons
+        p.text-right
+          = link_to 'Edit', '',
+                  remote: true,
+                  class: 'edit-question-link btn btn-outline-success btn-sm',
+                  data: { question_id: @question.id }
+          = link_to 'Delete', question_path(@question), method: :delete,
+                  class: 'btn btn-outline-danger btn-sm',
+                  data: { confirm: 'Are you sure?' }
+    hr
