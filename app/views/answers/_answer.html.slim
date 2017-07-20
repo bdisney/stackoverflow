@@ -18,6 +18,7 @@
                     class: 'edit-answer-link btn btn-outline-success btn-sm',
                     data: { answer_id: answer.id }
             = link_to 'Delete', answer_path(answer), method: :delete,
+                    remote: true,
                     class: 'btn btn-outline-danger btn-sm',
                     id: 'delete-answer-button',
                     data: {confirm: 'Are you sure?'}
