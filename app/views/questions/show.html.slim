@@ -7,7 +7,9 @@
       .row
         .col-md-10
           hr
-    = render @question.answers
+    .row
+      .col-md-10
+        = render @question.answers
   - else
     small There is no answers yet.
     br
