@@ -134,7 +134,7 @@ RSpec.describe AnswersController, type: :controller do
 
       before { process :accept, method: :patch, params: { id: someones_answer }, format: :js }
 
-      it 'dos not accept answer' do
+      it 'dose not accept answer' do
         expect(someones_answer.reload).to_not be_accepted
       end
     end
