@@ -1,1 +1,16 @@
 .edit_answer { display: none; }
+
+.answers-list {
+  .not-accepted {
+    color: lightgray;
+    opacity: .3;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .accepted {
+    color: greenyellow;
+  }
+}

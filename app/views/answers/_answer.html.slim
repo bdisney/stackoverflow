@@ -1,7 +1,11 @@
 - if answer.persisted?
-  div id="answer-#{answer.id}"
+  .answer id="answer-#{answer.id}"
     p id="edited-answer-#{answer.id}"
-      = answer.body
+      .row
+        .col-md-1
+          = render 'answers/flag', answer: answer
+        .col-md-9
+          = answer.body
     - if current_user&.author_of?(answer)
       = form_for answer, remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
         = f.label :body, 'Your answer:'

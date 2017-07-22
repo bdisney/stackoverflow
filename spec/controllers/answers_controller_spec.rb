@@ -2,10 +2,9 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let!(:question) { create(:question) }
+  sign_in_user
 
   describe 'POST #create' do
-    sign_in_user
-
     context 'with valid attributes' do
       it 'it saves new answer to db' do
         expect {
@@ -45,8 +44,6 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST#destroy' do
-    sign_in_user
-
     context 'author tries delete his answer' do
       let!(:answer) { create(:answer, question: question, user: @user) }
 
@@ -73,7 +70,6 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH#update' do
     let(:answer) { create(:answer, question: question) }
-    sign_in_user
 
     context 'with valid attributes' do
       before do
@@ -107,6 +103,39 @@ RSpec.describe AnswersController, type: :controller do
 
         answer.reload
         expect(answer.body).to eq 'Answer body'
+      end
+    end
+  end
+
+  describe 'PATCH#accept' do
+    context "accepts answer by question's author" do
+      let(:new_question) { create(:question, user: @user) }
+      let(:new_answer)   { create(:answer, question: new_question, user: create(:user)) }
+
+      before { process :accept, method: :patch, params: { id: new_answer }, format: :js }
+
+      it 'assigns the requested answer to @answer' do
+        expect(assigns(:answer)).to eq new_answer
+      end
+
+      it 'changes answer accepted attribute' do
+        new_answer.reload
+        expect(new_answer).to be_accepted
+      end
+
+      it 'renders accept template' do
+        expect(response).to render_template :accept
+      end
+    end
+
+    context 'failed to accept by someone else' do
+      let(:question) { create(:question) }
+      let!(:someones_answer) { create(:answer, question: question) }
+
+      before { process :accept, method: :patch, params: { id: someones_answer }, format: :js }
+
+      it 'dos not accept answer' do
+        expect(someones_answer.reload).to_not be_accepted
       end
     end
   end

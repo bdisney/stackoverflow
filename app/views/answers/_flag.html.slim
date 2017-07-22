@@ -1,0 +1,7 @@
+.accept-answer-flag
+  - if current_user&.author_of?(answer.question)
+    = link_to accept_answer_path(answer), method: :patch, remote: true, id: 'accept-link',
+              class: "accept-answer-link #{answer.accepted ? 'accepted' : 'not-accepted'}" do
+      i.fa.fa-check.fa-2x aria-hidden="true"
+  - elsif answer.accepted?
+    .accepted.i.fa.fa-check.fa-2x aria-hidden="true"
