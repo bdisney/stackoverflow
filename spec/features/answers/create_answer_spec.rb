@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_spec_helper'
 
 feature 'Create answer', %q{
   In order to help with question
@@ -12,7 +12,7 @@ feature 'Create answer', %q{
   scenario 'Authenticated user creates answer', js: true do
     sign_in(user)
     visit question_path(question)
-    fill_in 'Your awesome answer:', with: 'Some text'
+    fill_in 'answer[body]', with: 'Some text'
     click_on('add answer')
 
     expect(current_path).to eq question_path(question)

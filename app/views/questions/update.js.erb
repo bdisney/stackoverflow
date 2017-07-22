@@ -1,0 +1,7 @@
+$('.toast').remove();
+<% if @question.errors.any? %>
+    $('#flash-errors').html('<%= j render 'shared/errors_messages', resource: @question %>');
+<% else %>
+  $('.question').html('<%= j render @question %>');
+  toastr.success('Question was updated.');
+<% end %>

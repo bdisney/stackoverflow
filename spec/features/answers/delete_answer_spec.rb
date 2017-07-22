@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_spec_helper'
 
 feature 'Delete question', %q{
   In order to cancel my answer
@@ -12,7 +12,7 @@ feature 'Delete question', %q{
 
   before { sign_in(user) }
 
-  scenario 'deletes by author' do
+  scenario 'deletes by author', js: true do
     visit question_path(question)
 
     expect(page).to have_content('Answer body')

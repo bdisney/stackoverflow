@@ -75,7 +75,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid attributes' do
       it 'does not save the question to db' do
         expect { process :create, method: :post, params: { question: attributes_for(:invalid_question) } }
-            .to_not change(Question, :count)
+          .to_not change(Question, :count)
       end
 
       it 're-renders new view' do
@@ -89,47 +89,46 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
+
     context 'with valid attributes' do
+      let(:question) { create(:question, user: @user) }
+
       before do
         process :update, method: :patch, params: {
-            id: question, question: attributes_for(:question)
-        }
+          id: question, question: attributes_for(:question)
+        }, format: :js
       end
+
       it 'assigns the requested question to @question' do
         expect(assigns(:question)).to eq question
       end
 
       it 'changes question attributes' do
         process :update, method: :patch, params: {
-          id: question, question: {title: 'Question new title', body: 'new body' }
-        }
+          id: question, question: {title: 'Question new title', body: 'Question new body' }
+        }, format: :js
 
         question.reload
 
         expect(question.title).to eq 'Question new title'
-        expect(question.body).to eq 'new body'
+        expect(question.body).to eq 'Question new body'
       end
 
-      it 'redirects to the updated question' do
-        expect(response).to redirect_to question
+      it 'render update template' do
+        expect(response).to render_template :update
       end
     end
 
     context 'with invalid attributes' do
-      before do
-        process :update, method: :patch, params: {
-            id: question, question: {title: 'Title for invalid question', body: nil }
-        }
-      end
       it 'does not change question attributes' do
+        process :update, method: :patch, params: {
+          id: question, question: {title: 'Title for invalid question', body: nil }
+        }, format: :js
+
         question.reload
 
         expect(question.title).to eq 'Lorem Ipsum'
         expect(question.body).to eq 'MyBody'
-      end
-
-      it 're-renders edit view' do
-        expect(response).to render_template :edit
       end
     end
   end

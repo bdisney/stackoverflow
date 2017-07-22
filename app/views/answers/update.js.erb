@@ -2,7 +2,6 @@ $('.toast').remove();
 <% if @answer.errors.any? %>
   $('#flash-errors').html('<%= j render 'shared/errors_messages', resource: @answer %>');
 <% else %>
-  $('.answers-list').append('<%= j render @answer %>');
-  toastr.success('Answer was created.');
-  $('#new-answer-form').val('');
+  $('#answer-<%= @answer.id %>').html('<%= j render @answer %>');
+  toastr.success('Answer was updated.');
 <% end %>

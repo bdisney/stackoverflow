@@ -1,10 +1,25 @@
-#top-section.d-flex.flex-row
-  .col-md-10.align-self-end
+#top-section.d-flex.justify-content-between.mb-12
+  p-2.align-self-end
     h3
-      strong Top questions
-  .col-md-2
-    = link_to 'Ask question', new_question_path,
-            class: 'btn btn-sm btn-outline-info btn-rounded', role: 'button'
+      .question-title
+        strong Top questions
+  p-2 = link_to 'Ask question', new_question_path,
+          class: 'btn btn-sm btn-outline-info btn-rounded', role: 'button'
 hr
-.col-md-10
-  = render @questions
+br
+- @questions.each do |question|
+  .row
+    .col-md-9
+      .question
+        h3
+          = link_to question.title, question
+        .question-summary
+          = question.body
+    .col-md-3
+      p.small.text-right.text-muted
+        |asked #{time_ago_in_words(question.created_at)} ago
+        br
+        |#{question.user.email}
+  .row
+    .col-md-10
+      hr
