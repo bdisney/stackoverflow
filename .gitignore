@@ -21,3 +21,4 @@
 .byebug_history
 .idea
 .rubocop.yml
+/public/uploads

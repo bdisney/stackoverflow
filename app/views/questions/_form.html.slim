@@ -9,5 +9,9 @@
       .form-group
         = f.label :body
         = f.text_area :body, class: 'form-control', style: 'height: auto;', rows: '3'
+      .form-group
+        = f.fields_for :attachments do |a|
+          = a.label :file
+          = a.file_field :file
       div
         button.btn.btn-outline-info.btn-rounded type="submit" Create
