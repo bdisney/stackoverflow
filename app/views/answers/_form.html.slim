@@ -2,8 +2,12 @@
 
 .row
   .col-md-10
-    = form_for [@question, @answer], remote: true do |f|
+    = form_for [@question, @answer], html: { multipart: true }, remote: true do |f|
       = f.label :body, 'Your awesome answer:'
       = f.text_area :body, class: 'form-control', style: 'height: auto;', rows: '3', id: 'new-answer-form'
+      .form-group
+        = f.fields_for :attachments do |a|
+          = a.label :file
+          = a.file_field :file
       .d-flex.flex-row-reverse
         button.btn-flat.btn-rounded.waves-effect.text-info.btn-sm type="submit" add answer
