@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'carrierwave'
+gem 'cocoon'
 gem 'devise'
 gem 'pg'
 gem 'rails-controller-testing'
