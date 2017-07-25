@@ -1,7 +1,15 @@
 $('.toast').remove();
 <% if @answer.errors.any? %>
-  $('#flash-errors').html('<%= j render 'shared/errors_messages', resource: @answer %>');
+  <% if remotipart_submitted? %>
+    $('#flash-errors').html('<%= j "#{render 'shared/errors_messages', resource: @answer}" %>');
+  <% else %>
+    $('#flash-errors').html('<%= j render 'shared/errors_messages', resource: @answer %>');
+  <% end %>
 <% else %>
-  $('#answer-<%= @answer.id %>').html('<%= j render @answer %>');
+  <% if remotipart_submitted? %>
+    $('#answer-<%= @answer.id %>').html('<%= j "#{render @answer}" %>');
+  <% else %>
+    $('#answer-<%= @answer.id %>').html('<%= j render @answer %>');
+  <% end %>
   toastr.success('Answer was updated.');
 <% end %>

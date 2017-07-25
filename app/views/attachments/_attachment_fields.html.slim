@@ -1,7 +1,11 @@
 .form-group.nested-fields
   .field
-    = f.file_field :file
-    = link_to_remove_association f, { data: { toggle: 'tooltip' }, title: 'Remove' } do
+    - attachment = f.object
+    - if attachment.persisted?
+      = link_to attachment.file.identifier, attachment.file.url
+    - else
+      = f.file_field :file
+    = link_to_remove_association f, { data: { toggle: 'tooltip' }, title: 'Remove', id: 'attachment-remove-button' } do
       i.fa.fa-remove aria-hidden="true"
 
 javascript:

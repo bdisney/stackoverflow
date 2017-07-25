@@ -11,6 +11,8 @@
       = form_for answer, remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
         = f.label :body, 'Your answer:'
         = f.text_area :body, class: 'form-control'
+        = render 'attachments/form', f: f
+
         = button_tag 'Cancel', type: 'button', class: 'btn btn-outline-default btn-sm cancel'
         = button_tag 'Update answer', type: 'submit',
                 class: 'btn btn-outline-primary waves-effect btn-sm delete-button'
