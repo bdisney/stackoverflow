@@ -24,7 +24,7 @@ feature 'View question with or without answers', %q{
     question = create(:question_with_answers)
     visit question_path(question)
 
-    expect(page).to have_content('Answers')
+    expect(page).to have_content('2 answers')
     expect(page).to have_content('Answer body', count: 2)
   end
 end

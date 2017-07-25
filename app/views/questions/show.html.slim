@@ -1,18 +1,10 @@
 .question
   = render @question
-.answers-list
-  - if @question.answers.select(&:persisted?).any?
-    h4
-      strong #{@question.answers.count} Answers
-      .row
-        .col-md-10
-          hr
-    .row
-      .col-md-10.sorted-answers
-        = render @question.answers
-  - else
-    small There is no answers yet.
-    br
+.answers-header
+  = render 'answers/answers_counter'
+.row
+  .col-md-10.answers-list
+    = render @question.answers if @question.answers.select(&:persisted?).any?
 - if user_signed_in?
   = render 'answers/form'
 - else

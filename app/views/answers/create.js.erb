@@ -3,6 +3,7 @@ $('.toast').remove();
   $('#flash-errors').html('<%= j render 'shared/errors_messages', resource: @answer %>');
 <% else %>
   $('.answers-list').append('<%= j render @answer %>');
+  $('.answers-header').html('<%= j render 'answers/answers_counter' %>')
   toastr.success('Answer was created.');
   $('#new-answer-form').val('');
 <% end %>

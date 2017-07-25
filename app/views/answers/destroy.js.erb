@@ -1,3 +1,4 @@
 $('.toast').remove();
 $("#answer-<%= @answer.id %>").remove();
+$('.answers-header').html('<%= j render 'answers/answers_counter' %>')
 toastr.success('Answer was totally destroyed. Totally.')
