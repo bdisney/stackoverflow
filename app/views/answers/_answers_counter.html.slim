@@ -1,0 +1,9 @@
+- if @question.answers.select(&:persisted?).any?
+  h4
+    strong #{pluralize(@question.answers.count, 'answer')}
+    .row
+      .col-md-10
+        hr
+- else
+  small There is no answers yet.
+  br

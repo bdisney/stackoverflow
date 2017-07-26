@@ -1,8 +1,23 @@
 $('.toast').remove();
 <% if @answer.errors.any? %>
-  $('#flash-errors').html('<%= j render 'shared/errors_messages', resource: @answer %>');
+  <% if remotipart_submitted? %>
+    $('#flash-errors').html('<%= j "#{render 'shared/errors_messages', resource: @answer}" %>');
+  <% else %>
+    $('#flash-errors').html('<%= j render 'shared/errors_messages', resource: @answer %>');
+  <% end %>
+  $('#attachments').find('.nested-fields').remove();
 <% else %>
-  $('.answers-list').append('<%= j render @answer %>');
+  <% if remotipart_submitted? %>
+    $('.answers-list').append('<%= j "#{render @answer}" %>');
+    $('.answers-header').html('<%= j "#{render 'answers/answers_counter'}" %>')
+  <% else %>
+    $('.answers-list').append('<%= j render @answer %>');
+    $('.answers-header').html('<%= j render 'answers/answers_counter' %>')
+  <% end %>
+
   toastr.success('Answer was created.');
+
   $('#new-answer-form').val('');
+  $('#answer_attachments_attributes_0_file').val('');
+  $('#attachments').find('.nested-fields').not(':last').remove();
 <% end %>

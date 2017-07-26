@@ -15,12 +15,14 @@ br
 .row
   .col-md-10
     .question-body = @question.body
+    = render 'shared/attachments', resource: @question
     - if current_user&.author_of?(@question)
       = form_for @question, remote: true, html: {id: "edit-question-#{@question.id}"} do |f|
         = f.label :title, 'Title'
         = f.text_area :title, class: 'form-control'
         = f.label :body, 'Body'
         = f.text_area :body, class: 'form-control'
+        =render 'attachments/form', f: f
         = button_tag 'Cancel',
                 type: 'button',
                 class: 'btn btn-outline-default btn-sm cancel'

@@ -1,0 +1,8 @@
+- if resource.attachments.present?
+  div class="#{resource.class.to_s.underscore}-attachments"
+    h5.text-muted Files:
+    ul class="attachments"
+      - resource.attachments.each do |attachment|
+        li
+          i.fa.fa-paperclip aria-hidden="true"
+          = link_to attachment.file.identifier, attachment.file.url

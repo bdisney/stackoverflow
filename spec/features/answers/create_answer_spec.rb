@@ -19,6 +19,7 @@ feature 'Create answer', %q{
     expect(page).to have_selector('.toast-success',
                                   visible: false,
                                   text: 'Answer was created.')
+    expect(page).to have_content('1 answer')
     expect(page).to have_content('Some text')
 
   end
@@ -33,6 +34,8 @@ feature 'Create answer', %q{
                                   visible: false,
                                   text: "Body can&#39;t be blank")
     expect(current_path).to eq question_path(question)
+    expect(page).to_not have_content('1 answer')
+    expect(page).to have_content('There is no answers yet.')
   end
 
   scenario 'Non-authenticated user wants to create answer' do
