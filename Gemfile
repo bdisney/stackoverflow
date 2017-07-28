@@ -8,6 +8,7 @@ end
 gem 'carrierwave'
 gem 'cocoon'
 gem 'devise'
+gem 'gravatar_image_tag'
 gem 'pg'
 gem 'rails-controller-testing'
 gem 'remotipart'
