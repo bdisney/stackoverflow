@@ -16,10 +16,12 @@ br
         .question-summary
           = question.body
     .col-md-3
+      .question-info.text-right
+        .avatar= gravatar_image_tag(question.user.email)
       p.small.text-right.text-muted
-        |asked #{time_ago_in_words(question.created_at)} ago
+        |asked #{question.created_at.strftime '%b %-d \'%y at %H:%M'}
         br
-        |#{question.user.email}
+        mark = question.user.email
   .row
     .col-md-10
       hr
