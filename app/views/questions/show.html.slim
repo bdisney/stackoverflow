@@ -1,9 +1,12 @@
 .question
   = render @question
+  .row
+    .col-md-10
+      hr
 .answers-header
   = render 'answers/answers_counter'
 .row
-  .col-md-10.answers-list
+  .col-md-12.answers-list
     = render @question.answers if @question.answers.select(&:persisted?).any?
 - if user_signed_in?
   = render 'answers/form'

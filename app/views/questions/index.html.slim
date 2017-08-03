@@ -9,19 +9,13 @@ hr
 br
 - @questions.each do |question|
   .row
-    .col-md-9
+    .col-md-10
       .question
         h3
           = link_to question.title, question
         .question-summary
           = question.body
-    .col-md-3
-      .question-info.text-right
-        .avatar= gravatar_image_tag(question.user.email)
-      p.small.text-right.text-muted
-        |asked #{question.created_at.strftime '%b %-d \'%y at %H:%M'}
-        br
-        mark = question.user.email
+    = render 'shared/user_info', resource: question
   .row
     .col-md-10
       hr

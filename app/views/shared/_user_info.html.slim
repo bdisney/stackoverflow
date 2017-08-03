@@ -1,0 +1,7 @@
+.col-md-2
+  .question-info.text-right
+    .avatar= gravatar_image_tag(resource.user.email)
+  p.small.text-right.text-muted
+    |asked #{resource.created_at.strftime '%b %-d \'%y at %H:%M'}
+    br
+    mark = resource.user.email
