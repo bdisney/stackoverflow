@@ -11,8 +11,3 @@ $(document).on('ajax:success', '.vote-links', function (e, data) {
 }).on('ajax:error', function (e, xhr) {
     toastr.error(xhr.responseJSON);
 });
-
-
-
-
-
