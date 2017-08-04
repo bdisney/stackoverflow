@@ -1,0 +1,27 @@
+.vote {
+  margin-right: 50%;
+  text-align: center;
+
+  span, a {
+    display: block;
+    color: lightgray;
+    opacity: .3;
+  }
+
+
+  a:hover, .voted, .rating {
+    opacity: 1;
+  }
+
+  .rating {
+    font-weight: 600;
+  }
+
+  &-up.voted {
+    color: gray;
+  }
+
+  &-down.voted {
+    color:  gray;
+  }
+}

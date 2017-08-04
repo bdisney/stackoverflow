@@ -4,27 +4,34 @@
       .row
         .col-md-1
           = render 'answers/flag', answer: answer
+          .item-actions
+            = render 'votes/vote', resource: answer
         .col-md-9
           = answer.body
           = render 'shared/attachments', resource: answer
-    - if current_user&.author_of?(answer)
-      = form_for answer, remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
-        = f.label :body, 'Your answer:'
-        = f.text_area :body, class: 'form-control'
-        = render 'attachments/form', f: f
+        = render 'shared/user_info', resource: answer
 
-        = button_tag 'Cancel', type: 'button', class: 'btn btn-outline-default btn-sm cancel'
-        = button_tag 'Update answer', type: 'submit',
-                class: 'btn btn-outline-primary waves-effect btn-sm delete-button'
+    - if current_user&.author_of?(answer)
+      .col-md-10
+        = form_for answer, remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
+          = f.label :body, 'Your answer:'
+          = f.text_area :body, class: 'form-control'
+          = render 'attachments/form', f: f
+
+          = button_tag 'Cancel', type: 'button', class: 'btn btn-outline-default btn-sm cancel'
+          = button_tag 'Update answer', type: 'submit',
+                  class: 'btn btn-outline-primary waves-effect btn-sm delete-button'
 
       p.text-right id="answer-buttons-#{answer.id}"
         = link_to 'Edit', '',
-                remote: true,
-                class: 'edit-answer-link btn btn-outline-success btn-sm',
-                data: { answer_id: answer.id }
+                  remote: true,
+                  class: 'edit-answer-link btn btn-outline-success btn-sm',
+                  data: { answer_id: answer.id }
         = link_to 'Delete', answer_path(answer), method: :delete,
-                remote: true,
-                class: 'btn btn-outline-danger btn-sm',
-                id: 'delete-answer-button',
-                data: {confirm: 'Are you sure?'}
-    hr
+                  remote: true,
+                  class: 'btn btn-outline-danger btn-sm',
+                  id: 'delete-answer-button',
+                  data: {confirm: 'Are you sure?'}
+    .row
+      .col-md-10
+        hr

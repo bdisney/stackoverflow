@@ -23,8 +23,8 @@ feature 'Edit answer', %q{
     end
 
     scenario 'updates answer with valid data', js: true do
-      click_on('Edit')
       within('.answers-list') do
+        click_on('Edit')
         fill_in 'Your answer:', with: 'My correct answer'
         click_on('Update answer')
 
@@ -35,9 +35,11 @@ feature 'Edit answer', %q{
     end
 
     scenario 'updates answer with invalid data', js: true do
-      click_on('Edit')
-      fill_in 'Your answer:', with: nil
-      click_on('Update answer')
+      within('.answers-list') do
+        click_on('Edit')
+        fill_in 'Your answer:', with: nil
+        click_on('Update answer')
+      end
 
       expect(page).to have_selector('#toastr-errors',
                                     visible: false,
