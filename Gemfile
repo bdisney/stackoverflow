@@ -8,11 +8,13 @@ end
 gem 'carrierwave'
 gem 'cocoon'
 gem 'devise'
+gem 'gon'
 gem 'gravatar_image_tag'
 gem 'pg'
 gem 'rails-controller-testing'
 gem 'remotipart'
 gem 'rb-fsevent', '0.9.8'
+gem 'skim'
 gem 'slim'
 gem 'toastr-rails'
 
