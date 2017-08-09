@@ -9,6 +9,7 @@
         .col-md-9
           = answer.body
           = render 'shared/attachments', resource: answer
+          = render 'comments/comments', resource: answer
         = render 'shared/user_info', resource: answer
 
     - if current_user&.author_of?(answer)
