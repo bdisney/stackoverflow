@@ -1,0 +1,4 @@
+.comment
+  span.comment-body #{@body}
+  |&nbsp;&mdash;&nbsp;
+  mark #{@user.email}

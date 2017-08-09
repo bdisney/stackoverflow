@@ -16,6 +16,7 @@ hr
   .col-md-9
     .question-body = @question.body
     = render 'shared/attachments', resource: @question
+    = render 'comments/comments', resource: @question
     - if current_user&.author_of?(@question)
       = form_for @question, remote: true, html: {id: "edit-question-#{@question.id}"} do |f|
         = f.label :title, 'Title'

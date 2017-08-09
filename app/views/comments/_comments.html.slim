@@ -1,0 +1,15 @@
+.item-comments
+  .comments-list
+    - if resource.comments.any?
+      = render resource.comments
+  - if user_signed_in?
+    .comment-form
+      = link_to '+Add comment', new_polymorphic_path([resource, Comment]), remote: true,
+              class: 'add-comment'
+      = form_for [resource, resource.comments.build], remote: true do |f|
+        .form-group
+          = f.label :body, 'Your comment'
+          = f.text_area :body, class: 'form-control'
+        div
+          = button_tag 'Cancel', type: 'button', class: 'btn btn-sm btn-outline-danger cancel-comment'
+          = button_tag 'Add comment', class: 'btn btn-sm btn-outline-info'
