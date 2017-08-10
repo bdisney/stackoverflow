@@ -1,4 +1,6 @@
 class Question < ApplicationRecord
+  default_scope { order(created_at: :desc) }
+
   include Votable
   include Commentable
 
