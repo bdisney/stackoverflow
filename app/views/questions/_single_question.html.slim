@@ -2,7 +2,7 @@
   .col-md-10
     .question
       h3
-        = link_to question.title, question_url(question)
+        = link_to question.title, question
       .question-summary
         = question.body
   = render 'shared/user_info', resource: question
