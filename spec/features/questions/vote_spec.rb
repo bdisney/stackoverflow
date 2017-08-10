@@ -11,11 +11,6 @@ feature 'Vote for question', %q{
   given!(:author)  { create(:user) }
   given(:question) { create(:question, user: author) }
 
-  before do
-    sign_in(user)
-    visit question_path(question)
-  end
-
   it_should_behave_like 'vote ability' do
     let(:votable)            { create(:question) }
     let!(:votable_path)      { question_path(question) }
