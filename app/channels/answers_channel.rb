@@ -3,7 +3,7 @@ class AnswersChannel < ApplicationCable::Channel
     stream_from "question_#{data['id']}"
   end
 
-  def unfollow_answers
+  def unfollow
     stop_all_streams
   end
 end
