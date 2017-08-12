@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_comment, only: [:destroy]
   before_action :set_commentable, only: [:new, :create]
+  after_action  :publish_comment, only: :create
 
   def new
     @comment = @commentable.comments.new
@@ -24,6 +25,18 @@ class CommentsController < ApplicationController
   end
 
   private
+
+  def publish_comment
+    return if @comment.errors.any?
+
+    data = {
+      commentable_id: @comment.commentable_id,
+      commentable_type: @comment.commentable_type.underscore,
+      comment: @comment,
+      comment_user_email: current_user.email
+    }
+    ActionCable.server.broadcast("comments", data)
+  end
 
   def set_commentable
     if params[:question_id].present?

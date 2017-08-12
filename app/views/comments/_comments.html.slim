@@ -1,5 +1,5 @@
 .item-comments
-  .comments-list
+  .comments-list id="comments-#{resource.class.to_s.underscore}-#{resource.id}"
     - if resource.comments.any?
       = render resource.comments
   - if user_signed_in?

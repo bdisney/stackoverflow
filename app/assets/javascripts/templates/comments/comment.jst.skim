@@ -1,4 +1,4 @@
 .comment
-  span.comment-body #{@body}
+  span.comment-body #{@comment.body}
   |&nbsp;&mdash;&nbsp;
-  mark #{@user.email}
+  mark #{@user_email}

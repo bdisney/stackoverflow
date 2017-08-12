@@ -48,7 +48,7 @@ class AnswersController < ApplicationController
       user_email:         current_user.email,
       answer_created_at:  @answer.created_at.strftime('%b %-d \'%y at %H:%M')
     }
-    ActionCable.server.broadcast("answers_#{params[:question_id]}", data)
+    ActionCable.server.broadcast("question_#{params[:question_id]}", data)
   end
 
   def set_answer
