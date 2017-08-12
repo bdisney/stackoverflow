@@ -35,7 +35,10 @@ class CommentsController < ApplicationController
       comment: @comment,
       comment_user_email: current_user.email
     }
-    ActionCable.server.broadcast("comments", data)
+    ActionCable.server.broadcast(
+      "comments_for_#{@comment.commentable_type == 'Question' ? @commentable.id : @commentable.question_id}",
+      data
+    )
   end
 
   def set_commentable
