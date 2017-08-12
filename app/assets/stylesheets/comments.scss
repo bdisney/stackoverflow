@@ -16,4 +16,16 @@
       margin-top: 0.5em;
     }
   }
+
+  &-delete {
+    padding: 0 5px;
+    margin-left: 5px;
+    color: lightgray;
+    opacity: .5;
+
+    &:hover {
+      color: lightgray;
+      opacity: 1;
+    }
+  }
 }

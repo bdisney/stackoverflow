@@ -2,3 +2,6 @@
   span.comment-body #{@comment.body}
   |&nbsp;&mdash;&nbsp;
   mark #{@user_email}
+  - if gon.current_user_id == @comment.user_id
+    a class="comment-delete" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete" href="/comments/#{@comment.id}"
+      i class="fa fa-remove"

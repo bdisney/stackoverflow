@@ -11,7 +11,7 @@ feature 'Add comment to answer', %q{
   given(:question) { create(:question) }
   given!(:answer)  { create(:answer, question: question) }
 
-  it_should_behave_like 'add comment ability' do
+  it_should_behave_like 'comment ability' do
     let(:commentable)            { answer }
     let!(:commentable_path)      { question_path(question) }
     let!(:commentable_container) { '.answer' }

@@ -30,3 +30,7 @@ $(document).on('ajax:success', 'form.new_comment', function(e, data) {
 }).on('ajax:error', 'form.new_comment', function() {
     $('#toast-container').remove();
 });
+
+$(document).on('ajax:success', '.comment-delete', function() {
+    $(this).closest('.comment').remove();
+});

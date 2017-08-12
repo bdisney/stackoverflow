@@ -1,4 +1,4 @@
-shared_examples_for 'add comment ability' do
+shared_examples_for 'comment ability' do
   describe 'Authenticated user' do
     before do
       sign_in(user)
@@ -36,10 +36,46 @@ shared_examples_for 'add comment ability' do
     end
   end
 
+  describe 'Author of comment' do
+    let!(:comment) { create(:comment, commentable: commentable, user: user) }
+
+    before do
+      sign_in(user)
+      visit commentable_path
+    end
+
+    scenario 'can see remove comment link', js: true do
+      within commentable_container do
+        wait_for_ajax
+        expect(page).to have_selector '.comment-delete'
+      end
+    end
+
+    scenario 'can remove comment', js: true do
+      within commentable_container do
+        expect(page).to have_content comment.body
+
+        find('.comment-delete').click
+        wait_for_ajax
+
+        expect(page).to_not have_content(comment.body)
+      end
+    end
+  end
+
+  describe 'Non-author of comment' do
+    scenario 'does not see remove link', js: true do
+      sign_in(create(:user))
+      visit commentable_path
+
+      expect(page).to_not have_selector '.comment-delete'
+    end
+  end
+
   scenario 'Non-authenticated user tries add comment' do
     visit commentable_path
 
-    expect(page).to_not have_link('+Add link')
+    expect(page).to_not have_link('+Add comment')
   end
 
   context 'multiple sessions' do

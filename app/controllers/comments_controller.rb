@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    render status: :forbidden unless current_user.author_of?(@comment)
+    head :forbidden unless current_user.author_of?(@comment)
     @comment.destroy
   end
 

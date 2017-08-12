@@ -10,7 +10,7 @@ feature 'Add comment to question', %q{
   given(:user)     { create(:user) }
   given(:question) { create(:question) }
 
-  it_should_behave_like 'add comment ability' do
+  it_should_behave_like 'comment ability' do
     let(:commentable)            { question }
     let!(:commentable_path)      { question_path(question) }
     let!(:commentable_container) { '.question' }
