@@ -13,6 +13,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.new
     @answer.attachments.new
+    gon.push({ current_user_id: current_user.id }) if user_signed_in?
   end
 
   def new

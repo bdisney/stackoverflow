@@ -1,0 +1,69 @@
+- question_user_id = @data['question_user_id']
+- answer_user_id = @data['answer_user_id']
+- answer = @data['answer']
+- attachments = @data['answer_attachments']
+- answer_rating = @data['answer_rating']
+- user_avatar_url = @data['user_avatar_url']
+- user_email = @data['user_email']
+- answer_created_at = @data['answer_created_at']
+
+.answer id="answer-#{answer.id}"
+  div id="edited-answer-#{answer.id}"
+    .row
+      .col-md-1
+        - if gon.current_user_id == question_user_id
+          .accept-answer-flag
+            a class="accept-answer-link not-accepted" data-remote="true" rel="nofollow" data-method="patch" href="/answers/#{answer.id}/accept"
+              i class="fa fa-check fa-2x"
+        .vote
+          - if gon.current_user_id == answer_user_id || !gon.current_user_id
+            span.rating= answer_rating
+          - else
+            a class="vote-links vote-up" data-remote="true" rel="nofollow" data-method="patch" href="/answers/#{answer.id}/vote_up"
+              i class="fa fa-plus-square-o fa-2x"
+            span.rating= answer_rating
+            a class="vote-links vote-down" data-remote="true" rel="nofollow" data-method="patch" href="/answers/#{answer.id}/vote_down"
+              i class="fa fa-minus-square-o fa-2x"
+      .col-md-9
+        = answer.body
+        - if attachments.length
+          .answer-attachments
+            h5.text-muted Files:
+            ul.attachments.list-unstyled
+              - $.each attachments, (index, file)=>
+                li
+                  i class="fa fa-paperclip"
+                  a href="#{file.file_url}" #{file.file_name}
+        .item-comments
+          .comments-list
+          - if gon.current_user_id
+            .comment-form
+              a class="add-comment" data-remote="true" href="/answers/#{answer.id}/comments/new"
+                | +Add comment
+              form class="new_comment" id="new_comment" action="/answers/#{answer.id}/comments" data-remote="true" method="post" accepts-charset="UTF-8"
+                input name="utf8" type="hidden" value="✓"
+                input type="hidden" value="#{answer.id}" name="comment[commentable_id]" id="comment_commentable_id"
+                input type="hidden" value="Answer" name="comment[commentable_type]" id="comment_commentable_type"
+
+                .form-group
+                  label for="comment_body" Your comment
+                  textarea class="form-control" name="comment[body]" id="comment_body"
+                button name="button" type="button" class="btn btn-sm btn-outline-danger cancel-comment waves-effect waves-light" Cancel
+                button name="button" type="submit" class="btn btn-sm btn-outline-info waves-effect waves-light" Add comment
+      .col-md-2
+        .question-info.text-right
+          .avatar
+            img src= user_avatar_url
+          p.small.text-right.text-muted
+            |asked #{answer_created_at}
+            mark #{user_email}
+    - if gon.current_user_id == answer_user_id
+      p.text-right id="answer-buttons-#{answer.id}"
+        a class="edit-answer-link btn btn-outline-success btn-sm" data-remote="true" href="/answers/#{answer.id}/edit"
+          | Edit
+        a class="btn btn-outline-danger btn-sm" data-remote="true" data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/answers/#{answer.id}"
+          | Delete
+      .col-md-10
+    .row
+      .col-md-10
+        hr
