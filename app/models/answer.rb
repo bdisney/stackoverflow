@@ -1,5 +1,6 @@
 class Answer < ApplicationRecord
   include Votable
+  include Commentable
 
   default_scope { order(accepted: :desc, created_at: :asc) }
 

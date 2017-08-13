@@ -8,11 +8,13 @@ end
 gem 'carrierwave'
 gem 'cocoon'
 gem 'devise'
+gem 'gon'
 gem 'gravatar_image_tag'
 gem 'pg'
 gem 'rails-controller-testing'
 gem 'remotipart'
 gem 'rb-fsevent', '0.9.8'
+gem 'skim'
 gem 'slim'
 gem 'toastr-rails'
 
@@ -46,11 +48,11 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'capybara'
   gem 'capybara-webkit'
-  gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'rspec-rails'
+  gem 'selenium-webdriver'
 end
 
 group :test do

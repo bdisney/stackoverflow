@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
+  after_action :publish_question, only: [:create]
+
   def index
     @questions = Question.includes(:user)
   end
@@ -11,6 +13,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.new
     @answer.attachments.new
+    gon.push({ current_user_id: current_user.id }) if user_signed_in?
   end
 
   def new
@@ -45,6 +48,16 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/single_question', locals: { question: @question }
+      )
+    )
+  end
 
   def set_question
     @question = Question.find(params[:id])

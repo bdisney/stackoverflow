@@ -7,15 +7,6 @@
           class: 'btn btn-sm btn-outline-info btn-rounded', role: 'button'
 hr
 br
-- @questions.each do |question|
-  .row
-    .col-md-10
-      .question
-        h3
-          = link_to question.title, question
-        .question-summary
-          = question.body
-    = render 'shared/user_info', resource: question
-  .row
-    .col-md-10
-      hr
+.questions-list
+  - @questions.each do |question|
+    = render 'questions/single_question', question: question

@@ -1,0 +1,8 @@
+.comment
+  span.comment-body= comment.body
+  | &nbsp;&mdash;&nbsp;
+  mark= comment.user.email
+  - if user_signed_in? && current_user.author_of?(comment)
+    = link_to comment, method: :delete, remote: true,
+            data: {confirm: 'Are you sure?'}, class: 'comment-delete' do
+      i.fa.fa-remove aria-hidden="true"

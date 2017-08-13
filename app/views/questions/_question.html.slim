@@ -16,6 +16,7 @@ hr
   .col-md-9
     .question-body = @question.body
     = render 'shared/attachments', resource: @question
+    = render 'comments/comments', resource: @question
     - if current_user&.author_of?(@question)
       = form_for @question, remote: true, html: {id: "edit-question-#{@question.id}"} do |f|
         = f.label :title, 'Title'
@@ -32,14 +33,15 @@ hr
 
 
   = render 'shared/user_info', resource: question
-.row
-  .col-md-12
-    .question-buttons
-      .p.text-right
-        = link_to 'Edit', '',
-                remote: true,
-                class: 'edit-question-link btn btn-outline-success btn-sm',
-                data: {question_id: @question.id}
-        = link_to 'Delete', question_path(@question), method: :delete,
-                class: 'btn btn-outline-danger btn-sm',
-                data: {confirm: 'Are you sure?'}
+- if current_user&.author_of?(@question)
+  .row
+    .col-md-12
+      .question-buttons
+        .p.text-right
+          = link_to 'Edit', '',
+                  remote: true,
+                  class: 'edit-question-link btn btn-outline-success btn-sm',
+                  data: {question_id: @question.id}
+          = link_to 'Delete', question_path(@question), method: :delete,
+                  class: 'btn btn-outline-danger btn-sm',
+                  data: {confirm: 'Are you sure?'}

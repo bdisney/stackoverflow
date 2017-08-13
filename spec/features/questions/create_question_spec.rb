@@ -45,6 +45,38 @@ feature 'Create question', %q{
     expect(current_path).to eq questions_path
   end
 
+  context 'multiple sessions' do
+    scenario "question appears on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit questions_path
+      end
+
+      Capybara.using_session('quest') do
+        visit questions_path
+      end
+
+      Capybara.using_session('user') do
+        click_on 'Ask question'
+        fill_in 'Title', with: 'Test question'
+        fill_in 'Body', with: 'Test body'
+        click_on 'Create'
+
+        expect(page).to have_selector('#toastr-messages',
+                                      visible: false,
+                                      text: 'Question was created.')
+        expect(page).to have_content('Test question')
+        expect(page).to have_content('Test body')
+      end
+
+      Capybara.using_session('quest') do
+        wait_for_ajax
+        expect(page).to have_content('Test question')
+        expect(page).to have_content('Test body')
+      end
+    end
+  end
+
   scenario 'Non-authenticated user tries to create question' do
     visit questions_path
     click_on 'Ask question'

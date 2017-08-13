@@ -38,6 +38,31 @@ feature 'Create answer', %q{
     expect(page).to have_content('There is no answers yet.')
   end
 
+  context 'multiple sessions' do
+    scenario "answer appears on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('quest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'answer[body]', with: 'My awesome answer'
+        click_on 'add answer'
+
+        expect(page).to have_content('My awesome answer')
+      end
+
+      Capybara.using_session('quest') do
+        wait_for_ajax
+        expect(page).to have_content('My awesome answer')
+      end
+    end
+  end
+
   scenario 'Non-authenticated user wants to create answer' do
     visit question_path(question)
 

@@ -1,0 +1,11 @@
+.row
+  .col-md-10
+    .question
+      h3
+        = link_to question.title, question
+      .question-summary
+        = question.body
+  = render 'shared/user_info', resource: question
+.row
+  .col-md-10
+    hr
