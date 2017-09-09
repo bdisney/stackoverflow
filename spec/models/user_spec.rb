@@ -39,9 +39,13 @@ RSpec.describe User, type: :model do
     context 'user sign in with this oauth provider for the first time' do
       context 'user with given email exists' do
         let(:identity) { build(:identity, user: user) }
-        let(:auth_hash) { OmniAuth::AuthHash.new(provider: identity.provider,
-                                                 uid: identity.uid,
-                                                 info: { email: user.email }) }
+        let(:auth_hash) {
+          OmniAuth::AuthHash.new(
+            provider: identity.provider,
+            uid: identity.uid,
+            info: { email: user.email }
+          )
+        }
 
         it 'does not create new user' do
           expect { User.find_for_oauth(auth_hash) }.to_not change(User, :count)
@@ -64,9 +68,13 @@ RSpec.describe User, type: :model do
 
       context 'user with given email does not exist' do
         let(:identity) { attributes_for(:identity) }
-        let(:auth_hash) { OmniAuth::AuthHash.new(provider: identity[:provider],
-                                                 uid: identity[:uid],
-                                                info: { email: 'test@test.com' }) }
+        let(:auth_hash) {
+          OmniAuth::AuthHash.new(
+            provider: identity[:provider],
+            uid: identity[:uid],
+            info: { email: 'test@test.com' }
+          )
+        }
 
         it 'creates new user' do
           expect { User.find_for_oauth(auth_hash) }.to change(User, :count).by(1)
