@@ -25,9 +25,4 @@
         /! Footer
         .modal-footer
           .options.text-right
-            p
-              | Not a member?
-              a href=new_user_registration_path rel="nofollow"  Sign Up
-            p
-              | Forgot your
-              a href="#{new_password_path(resource_name)}" rel="nofollow"  Password?
+            = render 'devise/shared/links'

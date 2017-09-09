@@ -290,7 +290,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  capybara
+  capybara (~> 2.10, >= 2.10.1)
   capybara-webkit
   carrierwave
   cocoon
@@ -307,7 +307,7 @@ DEPENDENCIES
   meta_request
   omniauth
   omniauth-facebook
-  omniauth-twitter
+  omniauth-twitter (~> 1.2)
   pg
   pry-rails
   puma (~> 3.0)
