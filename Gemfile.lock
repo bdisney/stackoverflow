@@ -285,6 +285,7 @@ DEPENDENCIES
   rails-controller-testing
   rb-fsevent (= 0.9.8)
   remotipart
+  responders
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver

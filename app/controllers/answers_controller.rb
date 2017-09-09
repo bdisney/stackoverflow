@@ -7,14 +7,11 @@ class AnswersController < ApplicationController
 
   after_action :publish_answer, only: [:create]
 
-  def edit
-  end
+  respond_to :js
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-
-    @answer.save
+    @answer = current_user.answers.create(answer_params.merge(question_id: @question.id))
+    respond_with(@answer)
   end
 
   def update
@@ -22,12 +19,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy if current_user.author_of?(@answer)
     @question = @answer.question
+    respond_with(@answer.destroy) if current_user.author_of?(@answer)
   end
 
   def accept
-    @answer.accept if current_user.author_of?(@answer.question)
+    respond_with(@answer.accept) if current_user.author_of?(@answer.question)
   end
 
   private

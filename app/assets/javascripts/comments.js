@@ -27,10 +27,13 @@ $(document).on('ajax:success', 'form.new_comment', function(e, data) {
     $comment_form.find('#comment_body').val('');
     $form_container.find('.add-comment').show();
     $comment_form.hide();
+    toastr.success('Comment added.');
 }).on('ajax:error', 'form.new_comment', function() {
     $('#toast-container').remove();
 });
 
 $(document).on('ajax:success', '.comment-delete', function() {
+    $('.toast').remove();
+    toastr.success('Comment deleted.');
     $(this).closest('.comment').remove();
 });
