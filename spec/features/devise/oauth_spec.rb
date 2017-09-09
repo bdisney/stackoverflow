@@ -13,12 +13,12 @@ feature 'User sign in with social network account', %q{
         within('.navbar') { click_on 'Log in' }
 
         expect(current_path).to eq new_user_session_path
-        expect(page).to have_link "Sign in with #{provider}"
+        expect(page).to have_selector("##{provider.downcase}-link")
       end
 
       scenario "when #{provider} account is valid" do
         mock_auth_hash(provider)
-        click_on "Sign in with #{provider}"
+        find("##{provider.downcase}-link").click
 
         expect(page).to have_selector(
           '#toastr-messages',
@@ -29,7 +29,7 @@ feature 'User sign in with social network account', %q{
 
       scenario "when #{provider} account is invalid" do
         mock_auth_invalid_hash(provider)
-        click_on "Sign in with #{provider}"
+        find("##{provider.downcase}-link").click
 
         expect(page).to have_selector(
           '#toastr-messages',
