@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable,
          :omniauthable, omniauth_providers: [:facebook, :twitter]
 
   has_many :questions
@@ -14,21 +14,28 @@ class User < ApplicationRecord
   end
 
   def self.find_for_oauth(auth)
-    return if auth.blank?
+    identity = Identity.where(provider: auth.provider, uid: auth.uid.to_s).first
+    return identity.user if identity
 
-    identity = Identity.find_or_initialize_by(provider: auth.provider, uid: auth.uid.to_s)
-    return identity.user if identity.persisted?
+    email = auth.info.try(:[], :email)
+    user = User.where(email: email).first
 
-    user = User.find_or_initialize_by(email: auth.info[:email])
-    transaction do
-      unless user.persisted?
-        password = Devise::friendly_token(10)
-        user.assign_attributes(password: password, password_confirmation: password)
-        user.save!
-      end
-      identity.user = user
-      identity.save!
+    if user
+      user.create_identity(auth)
+    elsif email
+      password = Devise.friendly_token[0, 20]
+      user = User.create!(email: email, password: password, password_confirmation: password)
+
+      user.create_identity(auth)
+    else
+      password = Devise.friendly_token[0, 20]
+      user = User.create(password: password, password_confirmation: password)
     end
+
     user
+  end
+
+  def create_identity(auth)
+    self.identities.create(provider: auth.provider, uid: auth.uid)
   end
 end
