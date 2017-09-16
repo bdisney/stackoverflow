@@ -2,7 +2,7 @@
   .col-lg-6
     h1 Add email information
 
-    /= render 'shared/errors_messages', resource: @user
+    = render 'shared/errors_messages', resource: @user
 
     = form_tag register_path, method: :post do
       .form-group
