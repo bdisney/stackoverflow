@@ -1,7 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  before_action :set_auth
-  before_action :request_email, only: :facebook
-  before_action :default_callback
+  before_action :sing_in_or_register
 
   def facebook
   end
@@ -9,23 +7,24 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def twitter
   end
 
+  def register
+  end
+
   private
 
-  def set_auth
-    @auth = request.env['omniauth.auth']
-  end
-
-  def request_email
-    if @auth.info.email.blank?
-      redirect_to '/users/auth/facebook?auth_type=rerequest&scope=email'
+  def sing_in_or_register
+    @user = User.find_for_oauth(auth)
+    if @user.persisted?
+      sign_in_and_redirect @user, event: :authentication
+      set_flash_message(:notice, :success, kind: auth.provider) if is_navigational_format?
+    else
+      session[:provider] = auth.provider
+      session[:uid] = auth.uid
+      render 'omniauth_callbacks/add_email', locals: { auth_hash: auth}
     end
   end
 
-  def default_callback
-    @user = User.find_for_oauth(@auth)
-    if @user && @user.persisted?
-      sign_in_and_redirect(@user, event: :authentication)
-      set_flash_message(:notice, :success, kind: @auth.provider.capitalize) if is_navigational_format?
-    end
+  def auth
+    request.env['omniauth.auth'] || OmniAuth::AuthHash.new(params['auth_hash']).merge( { provider: session[:provider], uid: session[:uid] } )
   end
 end
