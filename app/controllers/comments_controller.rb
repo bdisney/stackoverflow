@@ -4,6 +4,8 @@ class CommentsController < ApplicationController
   before_action :set_commentable, only: [:new, :create]
   after_action  :publish_comment, only: :create
 
+  authorize_resource
+
   def new
     @comment = @commentable.comments.new
   end
@@ -20,7 +22,6 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    head :forbidden unless current_user.author_of?(@comment)
     @comment.destroy
   end
 

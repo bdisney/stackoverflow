@@ -9,10 +9,6 @@ class User < ApplicationRecord
   has_many :answers
   has_many :identities, dependent: :destroy
 
-  def author_of?(resource)
-    resource.user_id == id
-  end
-
   def self.find_for_oauth(auth)
     identity = Identity.where(provider: auth.provider, uid: auth.uid.to_s).first
     return identity.user if identity
