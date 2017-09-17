@@ -58,14 +58,25 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #edit' do
     sign_in_user
-    before { get :edit, params: { id: question } }
+    context 'edit by author' do
+      let!(:users_question) { create(:question, user: @user) }
+      before { get :edit, xhr: true, params: { id: users_question.id }, format: :js }
 
-    it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq question
+      it 'assigns requested question to @question' do
+        expect(assigns(:question)).to eq(users_question)
+      end
+
+      it 'renders edit template' do
+        expect(response).to render_template :edit
+      end
     end
 
-    it 'render edit view' do
-      expect(response).to render_template :edit
+    context 'edit by someone else' do
+      before { get :edit, xhr: true, params: { id: question.id }, format: :js }
+
+      it 'responds with status 403 (forbidden)' do
+        expect(response.status).to eq(403)
+      end
     end
   end
 
@@ -170,7 +181,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to index view' do
         process :destroy, method: :delete, params: { id: question }
-        expect(response).to redirect_to questions_path
+        expect(response).to redirect_to root_path
       end
     end
   end
