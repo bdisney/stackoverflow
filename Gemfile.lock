@@ -61,6 +61,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-email (2.5.0)
+      capybara (~> 2.4)
+      mail
     capybara-webkit (1.14.0)
       capybara (>= 2.3.0, < 2.14.0)
       json
@@ -95,6 +98,8 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
+    faraday (0.11.0)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -104,6 +109,7 @@ GEM
       multi_json
       request_store (>= 1.0)
     gravatar_image_tag (1.2.0)
+    hashie (3.5.5)
     i18n (0.8.4)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
@@ -113,8 +119,11 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.0.4)
+    jwt (1.5.6)
     launchy (2.4.3)
       addressable (~> 2.3)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -133,9 +142,32 @@ GEM
     mini_portile2 (2.2.0)
     minitest (5.10.2)
     multi_json (1.12.1)
+    multi_xml (0.6.0)
+    multipart-post (2.0.0)
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
+    oauth (0.5.1)
+    oauth2 (1.3.1)
+      faraday (>= 0.8, < 0.12)
+      jwt (~> 1.0)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 3)
+    omniauth (1.6.1)
+      hashie (>= 3.4.6, < 3.6.0)
+      rack (>= 1.6.2, < 3)
+    omniauth-facebook (4.0.0)
+      omniauth-oauth2 (~> 1.2)
+    omniauth-oauth (1.1.0)
+      oauth
+      omniauth (~> 1.0)
+    omniauth-oauth2 (1.4.0)
+      oauth2 (~> 1.0)
+      omniauth (~> 1.2)
+    omniauth-twitter (1.4.0)
+      omniauth-oauth (~> 1.1)
+      rack
     orm_adapter (0.5.0)
     pg (0.20.0)
     pry (0.10.4)
@@ -263,7 +295,8 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  capybara
+  capybara (~> 2.10, >= 2.10.1)
+  capybara-email
   capybara-webkit
   carrierwave
   cocoon
@@ -276,8 +309,12 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   launchy
+  letter_opener
   listen (~> 3.0.5)
   meta_request
+  omniauth
+  omniauth-facebook
+  omniauth-twitter (~> 1.2)
   pg
   pry-rails
   puma (~> 3.0)

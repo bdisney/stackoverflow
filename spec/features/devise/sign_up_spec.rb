@@ -15,8 +15,16 @@ feature 'User sign up', %q{
 
     expect(page).to have_selector('#toastr-messages',
                                   visible: false,
-                                  text: 'Welcome! You have signed up successfully.')
+                                  text: 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.')
     expect(current_path).to eq root_path
+
+    open_email('test@test.com')
+    current_email.click_link 'Confirm my account'
+
+    expect(page).to have_selector(
+                        '#toastr-messages',
+                        visible: false,
+                        text: 'Your email address has been successfully confirmed.')
   end
 
   scenario 'Non-registered user tries to sign up with invalid data' do

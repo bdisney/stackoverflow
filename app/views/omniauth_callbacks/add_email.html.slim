@@ -1,0 +1,12 @@
+.row
+  .col-lg-6
+    h1 Add email information
+
+    = render 'shared/errors_messages', resource: @user
+
+    = form_tag register_path, method: :post do
+      .form-group
+        = label_tag 'Email'
+        = text_field_tag 'auth_hash[info][email]', :email, class: 'form-control'
+
+      p= submit_tag 'Add', class: 'btn btn-primary'
