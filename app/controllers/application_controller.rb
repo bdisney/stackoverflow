@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |e|
     respond_to do |format|
       format.html { redirect_to root_path, alert: e.message }
-      format.json { head :forbidden }
+      format.json { render json: [exception.message], status: 403 }
       format.js   { render json: { error: e.message }, status: :forbidden }
     end
   end
