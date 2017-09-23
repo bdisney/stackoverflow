@@ -8,7 +8,7 @@
 .row
   .col-md-12.answers-list
     = render @question.answers if @question.answers.select(&:persisted?).any?
-- if user_signed_in?
+- if can?(:create, Answer)
   = render 'answers/form'
 - else
   .d-flex.justify-content-end.col-md-10

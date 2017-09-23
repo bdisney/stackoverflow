@@ -2,7 +2,7 @@
   .comments-list id="comments-#{resource.class.to_s.underscore}-#{resource.id}"
     - if resource.comments.any?
       = render resource.comments
-  - if user_signed_in?
+  - if can?(:create, Comment)
     .comment-form
       = link_to '+Add comment', new_polymorphic_path([resource, Comment]), remote: true,
               class: 'add-comment'

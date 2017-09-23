@@ -6,6 +6,8 @@ class QuestionsController < ApplicationController
 
   after_action :publish_question, only: [:create]
 
+  authorize_resource
+
   def index
     @questions = Question.includes(:user)
   end
@@ -35,12 +37,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.author_of?(@question)
+    @question.update(question_params)
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
+    if @question.destroy
       redirect_to questions_path, notice: 'Question was deleted.'
     else
       redirect_to questions_path, notice: 'Holy guacamole! Permission denied!'

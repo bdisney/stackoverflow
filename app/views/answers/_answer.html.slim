@@ -13,7 +13,7 @@
             = render 'comments/comments', resource: answer
         = render 'shared/user_info', resource: answer
 
-    - if current_user&.author_of?(answer)
+    - if can?(:manage_own, answer)
       .col-md-10
         = form_for answer, remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
           = f.label :body, 'Your answer:'

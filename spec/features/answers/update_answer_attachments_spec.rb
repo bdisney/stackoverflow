@@ -6,15 +6,14 @@ feature 'Edit answer attachments', %q{
   I want to be able to edit attached files
 } do
 
-  given(:user)       { create(:user) }
-  given(:question)   { create(:question) }
-  given!(:answer)    { create(:answer, question: question, user: user) }
+  given(:user)        { create(:user) }
+  given(:question)    { create(:question, user: user) }
+  given!(:answer)     { create(:answer, question: question, user_id: user.id) }
   given!(:attachment) { create(:attachment, attachable: answer) }
 
   background do
     sign_in(user)
     visit question_path(question)
-
     within('.answers-list') do
       click_on('Edit')
     end
@@ -28,6 +27,7 @@ feature 'Edit answer attachments', %q{
     end
 
     click_on('Update answer')
+    sleep 2
     expect(page).to_not have_link('test_image_1.png')
   end
 
