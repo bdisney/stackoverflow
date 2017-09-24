@@ -10,7 +10,7 @@ class Api::V1::ProfilesController < ApplicationController
   end
 
   def index
-    respond_with other_users
+    respond_with @users = User.where.not(id: current_resource_owner.id) if current_resource_owner
   end
 
   private
@@ -21,9 +21,5 @@ class Api::V1::ProfilesController < ApplicationController
 
   def current_ability
     @ability ||= Ability.new(current_resource_owner)
-  end
-
-  def other_users
-    @users = User.where.not(id: current_resource_owner.id) if current_resource_owner
   end
 end
