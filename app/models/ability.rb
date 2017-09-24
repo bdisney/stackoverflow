@@ -32,9 +32,10 @@ class Ability
     end
 
     can :accept, Answer, question: { user_id: user.id }
-    # can :accept, Answer do |answer|
-    #   answer.question.user_id == user.id
-    # end
+
+    can :me, User
+
+    can :manage, User
   end
 
   def admin_abilities

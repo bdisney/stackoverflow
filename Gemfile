@@ -9,6 +9,7 @@ gem 'cancancan'
 gem 'carrierwave'
 gem 'cocoon'
 gem 'devise'
+gem 'doorkeeper'
 gem 'gon'
 gem 'gravatar_image_tag'
 gem 'omniauth'
@@ -63,6 +64,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'json_spec'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
 end
 
