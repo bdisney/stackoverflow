@@ -24,7 +24,7 @@ feature 'Edit question', %q{
       within('.question') do
         fill_in 'Title', with: 'My correct question title'
         fill_in 'Body',  with: 'My correct question body'
-        click_on('Update question')
+        click_on('Update')
 
         expect(page).to_not have_content question.body
         expect(page).to have_content('My correct question body')
