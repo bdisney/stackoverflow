@@ -26,7 +26,7 @@ feature 'Edit answer', %q{
       within('.answers-list') do
         click_on('Edit')
         fill_in 'Your answer:', with: 'My correct answer'
-        click_on('Update answer')
+        click_on('Update')
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content('My correct answer')
@@ -38,7 +38,7 @@ feature 'Edit answer', %q{
       within('.answers-list') do
         click_on('Edit')
         fill_in 'Your answer:', with: nil
-        click_on('Update answer')
+        click_on('Update')
       end
 
       expect(page).to have_selector('#toastr-errors',
