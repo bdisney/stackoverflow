@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 describe 'Questions API' do
+  let(:access_token) { create(:access_token) }
+
   describe 'GET /index' do
     it_behaves_like 'API authenticable'
 
     context 'authorized' do
-      let(:access_token) { create(:access_token) }
       let(:questions)    { create_list(:question, 2) }
       let(:question)     { questions.first }
       let!(:answer)      { create(:answer, question: question) }
@@ -33,21 +34,19 @@ describe 'Questions API' do
   end
 
   describe 'GET /show' do
-    let(:question) { create(:question)}
+    let(:question)    { create(:question) }
+    let(:path)        { "/api/v1/questions/#{question.id}" }
+    let(:attachable)  { question }
+    let(:commentable) { question }
 
     it_behaves_like 'API authenticable'
+    it_behaves_like 'API attached'
+    it_behaves_like 'API commented'
 
     context 'authorized' do
-      let(:access_token) { create(:access_token) }
-      let(:question)     { create(:question)}
       let!(:answer)      { create(:answer, question: question) }
-      let!(:attachment)  { create(:attachment, attachable: question) }
-      let!(:comment)     { create(:comment, commentable: question) }
 
-      before {
-        get "/api/v1/questions/#{question.id}",
-            params: { format: :json, access_token: access_token.token }
-      }
+      before { get path, params: { format: :json, access_token: access_token.token } }
 
       it 'returns 200 status code' do
         expect(response).to be_success
@@ -71,45 +70,22 @@ describe 'Questions API' do
           end
         end
       end
-
-      context 'attachments' do
-        it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path("attachments")
-        end
-
-        it 'contains attachment url' do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("attachments/0/url")
-        end
-      end
-
-      context 'comments' do
-        it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path("comments")
-        end
-
-        %w(id body).each do |attr|
-          it "contains #{attr}" do
-            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json)
-                                         .at_path("comments/0/#{attr}")
-          end
-        end
-      end
     end
 
     def do_request(options = {})
-      get "/api/v1/questions/#{question.id}", params: { format: :json }.merge(options)
+      get path, params: { format: :json }.merge(options)
     end
   end
 
   describe 'POST /create' do
+    let(:path) { "/api/v1/questions" }
+
     it_behaves_like 'API authenticable'
 
     context 'authorized' do
-      let(:access_token) { create(:access_token) }
-
       context 'with valid attributes' do
         it 'returns 200 status code' do
-          post "/api/v1/questions", params: {
+          post path, params: {
               format: :json, access_token: access_token.token,
               question: attributes_for(:question)
           }
@@ -118,7 +94,7 @@ describe 'Questions API' do
 
         it 'saves the new question to database' do
           expect {
-            post "/api/v1/questions", params: {
+            post path, params: {
               format: :json, access_token: access_token.token,
               question: attributes_for(:question) }
           }.to change(Question, :count).by(1)
@@ -127,7 +103,7 @@ describe 'Questions API' do
 
       context 'with invalid attributes' do
         it 'returns 422 status code' do
-          post "/api/v1/questions", params: {
+          post path, params: {
               format: :json, access_token: access_token.token,
               question: attributes_for(:invalid_question)
           }
@@ -136,7 +112,7 @@ describe 'Questions API' do
 
         it "doesn't save the new question to database" do
           expect {
-            post "/api/v1/questions", params: {
+            post path, params: {
               format: :json, access_token: access_token.token,
               question: attributes_for(:invalid_question) }
           }.to_not change(Question, :count)
@@ -145,7 +121,7 @@ describe 'Questions API' do
     end
 
     def do_request(options = {})
-      post "/api/v1/questions", params: { format: :json, question: attributes_for(:question) }.merge(options)
+      post path, params: { format: :json, question: attributes_for(:question) }.merge(options)
     end
   end
 end
