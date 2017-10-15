@@ -36,6 +36,12 @@ class Ability
     can :me, User
 
     can :manage, User
+
+    can :create, Subscription do |subscription|
+      !user.subscribed_for?(subscription)
+    end
+
+    can :destroy, Subscription, user: user
   end
 
   def admin_abilities
