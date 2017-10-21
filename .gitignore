@@ -22,3 +22,4 @@
 .idea
 .rubocop.yml
 /public/uploads
+dump.rdb

@@ -24,4 +24,18 @@ RSpec.describe Answer, type: :model do
       expect(answer.reload).to_not be_accepted
     end
   end
+
+  describe 'notify_subscribers' do
+    let(:answer) { build(:answer) }
+
+    it 'calls on answer#create' do
+      expect(answer).to receive(:notify_subscribers)
+      answer.save
+    end
+
+    it 'adds NotifySubscribersJob' do
+      expect(NotifySubscribersJob).to receive(:perform_later).with(answer)
+      answer.save
+    end
+  end
 end

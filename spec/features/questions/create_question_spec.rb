@@ -20,6 +20,7 @@ feature 'Create question', %q{
     expect(page).to have_selector('#toastr-messages',
                                   visible: false,
                                   text: 'Question was created.')
+    expect(page).to have_link 'Unsubscribe!'
     expect(page).to have_content('Test question')
     expect(page).to have_content('Test body')
   end

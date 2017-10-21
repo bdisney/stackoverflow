@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   it { should have_many(:questions) }
   it { should have_many(:answers) }
   it { should have_many(:identities).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
@@ -84,6 +85,20 @@ RSpec.describe User, type: :model do
           expect(user_identity.uid).to eq auth_hash.uid
         end
       end
+    end
+  end
+
+  describe 'subscribed_for?' do
+    let(:user)       { create(:user) }
+    let(:other_user) { create(:user) }
+    let!(:question)  { create(:question, user: user) }
+
+    it 'should return true if user already subscribed to the question' do
+      expect(user.subscribed_for?(question)).to be_truthy
+    end
+
+    it 'should return false if user is not subscribed to the question' do
+      expect(other_user.subscribed_for?(question)).to be_falsey
     end
   end
 end

@@ -5,6 +5,8 @@ class Answer < ApplicationRecord
 
   default_scope { order(accepted: :desc, created_at: :asc) }
 
+  after_create :notify_subscribers
+
   belongs_to :question
   belongs_to :user
 
@@ -16,5 +18,9 @@ class Answer < ApplicationRecord
       question.answers.where(accepted: true).update_all(accepted: false)
       toggle(:accepted).save!
     end
+  end
+
+  def notify_subscribers
+    NotifySubscribersJob.perform_later(self)
   end
 end

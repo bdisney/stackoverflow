@@ -1,0 +1,6 @@
+<% if @subscription.errors.present? %>
+  $('#flash-errors').html('<%= j render 'shared/errors_messages', resource: @subscription %>');
+<% else %>
+  $('.subscription-link').replaceWith("<%= j link_to 'Subscribe!', subscriptions_path(subscription: {question_id: @question}), method: :post, remote: true, class: 'subscription-link' %>")
+  toastr.success('Unsubscribed!')
+<% end %>
